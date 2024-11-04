@@ -1,0 +1,53 @@
+SQL> SET SERVEROUT ON
+SQL> SET VERIFY OFF
+SQL>
+SQL> CREATE TABLE o_rollcall(roll_no NUMBER,  name VARCHAR2(15), div VARCHAR2(25));
+
+SQL> CREATE TABLE n_rollcall(roll_no NUMBER,  name VARCHAR2(20), div VARCHAR2(15));
+
+SQL> INSERT INTO o_rollcall VALUES(45,'ASHUTOSH','A');
+
+SQL> INSERT INTO o_rollcall VALUES(46,'ARYAN','A');
+
+SQL> INSERT INTO o_rollcall VALUES(47,'SANKET','B');
+
+SQL> INSERT INTO o_rollcall VALUES(45,'ASHUTOSH','A');
+
+SQL> INSERT INTO o_rollcall VALUES(48,'ROHAN','B');
+
+SQL> INSERT INTO o_rollcall VALUES(45,'ASHUTOSH','B');
+
+SQL> CREATE PROCEDURE cursor_imp AS
+  2  c_r NUMBER;
+  3  c_n VARCHAR2(25);
+  4  c_d VARCHAR2(5);
+  5  cursor c1 (roll NUMBER , n VARCHAR2 , d VARCHAR2) IS SELECT roll_no , COUNT (roll_no),name ,COUNT (name), div, COUNT (div) FROM o_rollcall GROUP BY roll_no,name,div HAVING (COUNT(roll_no)>1) AND (COUNT(name)>1) AND (COUNT(div)>1) ;
+  6  temp  c1%rowtype;
+  7  BEGIN
+  8     DELETE FROM n_rollcall;
+  9     INSERT INTO n_rollcall SELECT * FROM o_rollcall;
+ 10     OPEN c1(c_r,c_n,c_d);
+ 11     LOOP
+ 12             FETCH c1 INTO temp;
+ 13             EXIT WHEN c1%NOTFOUND;
+ 14             DELETE FROM n_rollcall WHERE roll_no = temp.roll_no AND name = temp.name AND div = temp.div;
+ 15             INSERT INTO n_rollcall VALUES (temp.roll_no,temp.name,temp.div);
+ 16             dbms_output.put_line(temp.roll_no||temp.name||temp.div);
+ 17     END LOOP;
+ 18  END;
+ 19  /
+
+SQL>
+SQL> BEGIN
+  2  cursor_imp;
+  3  END;
+  4
+  5  /
+
+
+SQL> SELECT * FROM  o_rollcall;
+
+
+SQL> SELECT * FROM  N_rollcall;
+
+  
