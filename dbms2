@@ -1,0 +1,41 @@
+mysql> show databases; 
+
+mysql> create database info; 
+
+mysql> show databases; 
+
+mysql> use info; 
+
+mysql> create table student(roll_no int(30) primary key,name varchar(40),age int(30)); 
+
+mysql> desc student; 
+
+mysql> create table stud(name varchar(40) not NULL); 
+
+mysql> Alter table Student add Address varchar(30); 
+
+mysql> desc student; 
+ 
+mysql> Alter table Student modify age int(5); 
+
+mysql> desc student; 
+
+mysql> Alter table Student drop column age; 
+
+mysql> desc student; 
+
+mysql> create view v1 as select name,roll_no from student ; 
+
+mysql> select * from v1; 
+
+mysql> create unique index ind1 on student(name,roll_no); 
+
+mysql> show index from student; 
+
+mysql> alter table student add index ind2(address); 
+
+mysql> show index from student; 
+
+mysql> drop table student; 
+
+mysql> desc student; 
