@@ -1,23 +1,256 @@
-show databases; 
-create database info; 
-show databases; 
-use info; 
-create table student(roll_no int(30) primary key,name 
-varchar(40),age int(30)); 
-desc student; 
-create table stud(name varchar(40) not NULL); 
-Alter table Student add Address varchar(30); 
-desc student; 
-Alter table Student modify age int(5); 
-desc student; 
-Alter table Student drop column age; 
 
-desc student; 
-create view v1 as select name,roll_no from student ; 
-select * from v1; 
+
+
+
+
+mysql> show databases; 
++ 
+| Database 
++ 
+| emp 
+| info 
++ 
+| 
++ 
+| 
+| 
+| information_schema | 
+| mysql 
+| 
+| performance_schema | 
+| sys 
+| 
++ 
++ 
+6 rows in set (0.00 sec) 
+mysql> use info; 
+Database changed 
+mysql> show databases; 
++ 
+| Database 
++ 
+| emp 
+| info 
++ 
+| 
++ 
+| 
+| 
+| information_schema | 
+| mysql 
+| 
+| performance_schema | 
+| sys 
+| 
++ + 
+6 rows in set (0.00 sec) 
+mysql> show tables; 
++ + 
+| Tables_in_info | 
++ + 
+| order_details | 
+| product | 
+| products | 
+| stud | 
+| v1 | 
++ + 
+5 rows in set (0.00 sec) 
+/* Accessing tables from the existing database */ 
  
-create unique index ind1 on student(name,roll_no); 
-show index from student; 
-alter table student add index ind2(address); 
-show index from student; 
-drop table student;
+mysql> select product_id,prod_Name,supplier_id,category_id,price from 
+product; 
++ + + + + + 
+| product_id | prod_Name | supplier_id | category_id | price | 
++ + + + + + 
+| 1 | ram | 1 | 2 | 320 | 
+| 2 | Ravi | 3 | 4 | 4000 | 
+| 3 | Darshan | 4 | 3 | 5000 | 
+| 4 | tanmay | 5 | 3 | 200 | 
+| 5 | yash | 6 | 5 | 4000 | 
++ + + + + + 
+5 rows in set (0.00 sec) 
+ 
+/* Accessing tables from the existing database */ 
+ 
+mysql> select orderDetail_Id,orderID,product_id,Quantity from 
+Order_details; 
++ + + + + 
+| orderDetail_Id | orderID | product_id | Quantity | 
++ + + + + 
+| 1 | 33004 | 2 | 12 | 
+| 2 | 234543 | 4 | 10 | 
+| 3 | 45433 | 3 | 15 | 
+| 5 | 76543 | 5 | 34 | 
++ + + + + 
+4 rows in set (0.00 sec) 
+/* To join two tables columns by using LEFT JOIN */ 
+ 
+ 
+mysql> select product.product_id,product.prod_Name,order_details.orderID 
+from product left join order_details on product.product_id=o 
+rder_details.product_id; 
++ + + + 
+| product_id | prod_Name | orderID | 
++ + + + 
+| 1 | ram | NULL | 
+| 2 | Ravi | 33004 | 
+| 3 | Darshan | 45433 | 
+| 4 | tanmay | 234543 | 
+| 5 | yash | 76543 | 
++ + + + 
+5 rows in set (0.00 sec) 
+/* To join two tables columns by using RIGHT JOIN */ 
+ 
+mysql> select product.product_id,product.prod_Name,order_details.orderID 
+from product RIGHT JOIN order_details on product.product_id= 
+order_details.product_id; 
++ + + + 
+| product_id | prod_Name | orderID | 
++ + + + 
+| 2 | Ravi | 33004 | 
+| 4 | tanmay | 234543 | 
+| 3 | Darshan | 45433 | 
+| 5 | yash | 76543 | 
++ + + + 
+4 rows in set (0.00 sec) 
+/* To join two tables columns by using CROSS JOIN */ 
+ 
+mysql> select product.product_id,product.prod_Name,order_details.orderID 
+from product CROSS JOIN order_details on product.product_id= 
+order_details.product_id; 
++ + + + 
+| product_id | prod_Name | orderID | 
++ + + + 
+| 2 | Ravi | 33004 | 
+| 4 | tanmay | 234543 | 
+| 3 | Darshan | 45433 | 
+| 5 | yash | 76543 | 
++ + + + 
+4 rows in set (0.00 sec) 
+/* To Display the orderdetails whose Quantity = 10 By using “ANY” Clause 
+*/ 
+ 
+ 
+mysql> select prod_Name from product where product_id = ANY (select 
+product_id from order_details where Quantity=10); 
++ + 
+| prod_Name | 
++ + 
+| tanmay | 
++ + 
+1 row in set (0.00 sec) 
+ 
+/* To find any orderdetails whose Quantity is less than 10 */ 
+mysql> select prod_Name from product where product_id = ANY (select 
+product_id from order_details where Quantity < 10); 
+Empty set (0.00 sec) 
+mysql> select prod_Name from product where product_id = ANY (select 
+product_id from order_details where Quantity>10); 
++ + 
+| prod_Name | 
++ + 
+| Ravi | 
+| Darshan | 
+| yash | 
++ + 
+3 rows in set (0.00 sec) 
+/* Display ALL prod_name from product by using ALL clause : */ 
+mysql> select All prod_Name from product where TRUE; 
++ + 
+| prod_Name | 
++ + 
+| ram | 
+| Ravi | 
+| Darshan | 
+| tanmay | 
+| yash | 
++ + 
+5 rows in set (0.00 sec) 
+/* To Display the orderdetails whose Quantity = 10 By using “ALL” Clause 
+*/ 
+mysql> select prod_Name from product where product_id=ALL (select 
+product_id from order_details where Quantity=10); 
++ + 
+| prod_Name | 
++ + 
+| tanmay | 
++ + 
+1 row in set (0.00 sec) 
+/* To find any orderdetails whose Quantity is Greater than 10 by using 
+“ALL” clause*/ 
+mysql> select prod_Name from product where product_id=ALL (select 
+product_id from order_details where Quantity>10); 
+Empty set (0.00 sec) 
+ 
+mysql> select prod_Name from product where product_id=ALL (select 
+product_id from order_details where Quantity<10); 
++ + 
+| prod_Name | 
++ + 
+| ram | 
+| Ravi | 
+| Darshan | 
+| tanmay | 
+| yash | 
++ + 
+5 rows in set (0.00 sec) 
+mysql> select * from product where product_id = ANY (select product_id 
+from order_details); 
++ + + + + + 
+| product_id | prod_Name | supplier_id | category_id | price | 
++ + + + + + 
+| 2 | Ravi | 3 | 4 | 4000 | 
+| 4 | tanmay | 5 | 3 | 200 | 
+| 3 | Darshan | 4 | 3 | 5000 | 
+| 5 | yash | 6 | 5 | 4000 | 
++ + + + + + 
+4 rows in set (0.00 sec) 
+ 
+mysql> select * from product where product_id = ALL (select product_id 
+from order_details); 
+Empty set (0.00 sec) 
+ 
+mysql> create view v12 as select prod_Name,price from product; 
+Query OK, 0 rows affected (0.03 sec) 
+mysql> select * from v12; 
++ + + 
+| prod_Name | price | 
++ + + 
+| ram | 320 | 
+| Ravi | 4000 | 
+| Darshan | 5000 | 
+| tanmay | 200 | 
+| yash | 4000 | 
++ + + 
+5 rows in set (0.02 sec) 
+ 
+mysql> select * from product; 
++ + + + + + 
+| product_id | prod_Name | supplier_id | category_id | price | 
++ + + + + + 
+| 1 | ram | 1 | 2 | 320 | 
+| 2 | Ravi | 3 | 4 | 4000 | 
+| 3 | Darshan | 4 | 3 | 5000 | 
+| 4 | tanmay | 5 | 3 | 200 | 
+| 5 | yash | 6 | 5 | 4000 | 
++ + + + + + 
+5 rows in set (0.00 sec) 
+mysql> select * from order_details; 
++ + + + + 
+| orderDetail_Id | orderID | product_id | Quantity | 
++ + + + + 
+| 1 | 33004 | 2 | 12 | 
+| 2 | 234543 | 4 | 10 | 
+| 3 | 45433 | 3 | 15 | 
+| 5 | 76543 | 5 | 34 | 
++ + + + + 
+4 rows in set (0.00 sec) 
+mysql> update order_details set orderID=76543,product_id=1,Quantity=09 
+where orderDetail_Id; 
+Query OK, 4 rows affected (0.01 sec) 
+Rows matched: 4 Changed: 4 Warnings: 0 
+mysql> select * from order_details; 
++ + + + + 
+| orderDetail_Id | orderID | product_id | Quantity | 
++ + + + + 
+| 1 | 76543 | 1 | 9 |
