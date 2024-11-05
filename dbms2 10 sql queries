@@ -44,28 +44,3 @@ mysql> desc student;
 
 
 
-
-show databases; 
-create database info; 
-show databases; 
-use info; 
-create table student(roll_no int(30) primary key,name 
-varchar(40),age int(30)); 
-desc student; 
-create table stud(name varchar(40) not NULL); 
-Alter table Student add Address varchar(30); 
-desc student; 
-Alter table Student modify age int(5); 
-desc student; 
-Alter table Student drop column age; 
-
-desc student; 
-create view v1 as select name,roll_no from student ; 
-select * from v1; 
- 
-create unique index ind1 on student(name,roll_no); 
-show index from student; 
-alter table student add index ind2(address); 
-show index from student; 
-drop table student;
-
