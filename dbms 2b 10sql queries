@@ -18,7 +18,7 @@ mysql> select * from emp_info;
 
 mysql> update emp_info set emp_name='shruti' where emp_id=101; 
 
-mysql> select * from emp_info; /* displaying All containts From the table */ 
+mysql> select * from emp_info; 
 
 mysql> select address ,emp_name from emp_info; 
  
