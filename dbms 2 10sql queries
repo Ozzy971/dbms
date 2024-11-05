@@ -1,0 +1,52 @@
+mysql> show databases; 
+ 
+mysql> use emp; 
+ 
+mysql> create table emp_info(emp_id int(30) primary key ,emp_name 
+varchar(40),emp_salary int(40),address varchar(50)); 
+
+mysql> desc emp_info; 
+
+mysql> insert into emp_info values(101,'Amay',45000,'pune'),(102,'avi',50000,'chinchwad'),(103,'sunny',
+43000,'noida'),(104,'arnav',65000,'mumbai'); 
+
+mysql> select * from emp_info; 
+
+mysql> delete from emp_info where address='noida'; 
+
+mysql> select * from emp_info; 
+
+mysql> update emp_info set emp_name='shruti' where emp_id=101; 
+
+mysql> select * from emp_info; /* displaying All containts From the table */ 
+
+mysql> select address ,emp_name from emp_info; 
+ 
+mysql> select * from emp_info order by emp_name ASC; 
+
+mysql> select * from emp_info where emp_name like '%v'; 
+ 
+mysql> select * from emp_info where emp_name like 'a%'; 
+
+mysql> select distinct emp_id from emp_info; 
+ 
+mysql> select emp_name from emp_info where emp_name in ('avi','arnav'); 
+
+mysql> select * from emp_info; 
+
+mysql> select * from emp_info where emp_name is null; 
+
+mysql> select avg(emp_salary) from emp_info; 
+
+mysql> select min(emp_salary) from emp_info; 
+ 
+mysql> select max(emp_salary) from emp_info; 
+ 
+mysql> select count(emp_salary) from emp_info; 
+ 
+mysql> select sum(emp_salary) from emp_info; 
+
+mysql> select emp_name, sum(emp_salary) from emp_info group by emp_name; 
+
+mysql> select emp_name, sum(emp_salary) from emp_info group by emp_name 
+having sum(emp_salary)<55000;
