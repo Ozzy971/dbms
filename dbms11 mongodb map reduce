@@ -1,0 +1,27 @@
+>show dbs
+
+mongo>  use payment_status
+ 
+payment_status>  db.stat.insertMany([{C_id: "Samiksha", Product: "Dark Chocolate", Amount: 150, Status: "Paid"}, 
+{C_id: "rushi", Product: "Choco Bakes", Amount: 145, Status: "Not Paid"}, 
+{C_id: "sharad", Product: "Ramen", Amount: 225, Status: "Paid"}, 
+{C_id: "jay", Product: "Wine", Amount: 11500, Status: "Paid"}, 
+{C_id: "arya", Product: "Biscuits", Amount: 475, Status: "Paid"}])
+
+payment_status>  db.stat.find().pretty()
+ 
+********************MAPREDUCE*****************************
+payment_status>  db.stat.mapReduce(function(){emit(this.C_id, this.Amazon);}, function(key,values){return Array.sum(values)}, {query: {"Status": "Not Paid"}, out: "Bill_Amount"})
+
+payment_status> var mapfun1=function(){emit(this.C_id, this.Amount);};
+
+payment_status>  var reducefun1=function(keyC_id, valueAmount){rreturn Array.sum(valueAmount);};
+
+payment_status> db.stat.mapReduce(mapfun1, reducefun1,{out: "Map"})
+
+payment_status>  db.Bill_Amount.find().pretty()
+
+payment_status>  db.stat.mapReduce(function(){emit(this.C, this.Amazon);}, function(key, values){return Array.sum(values)}, {query: {"Status": "Not Paid"}, out: "Bill_Amount"})
+
+payment_status>  db.Bill_Amount.find().pretty()
+
