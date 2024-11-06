@@ -1,0 +1,41 @@
+>show dbs
+
+mongo> use customer
+
+customer> db.customer.insertMany([{item_id:01,Name:"Samiksha",product:"red wine",amount:29000},{item_id:02,Name:"rushi",product:"headphones",amount:15000},{item_id:03,Name:"Ajinkya",product:"laptop",amount:5500},{item_id:04,Name:"piyusha",product:"Mobile",amount:800},{item_id:05,Name:"Avi",product:"coffee",amount:1800}]);
+
+
+customer> db.customer.aggregate({$group:{_id: "$Name","Total":{$sum:"amount"}}})
+
+customer> db.customer.aggregate({$group:{_id: "$Name","Total":{$sum:"$amount"}}})
+
+customer> db.customer.aggregate({$group:{_id: "$Name","Total":{$avg:"$amount"}}})
+
+customer> db.customer.aggregate({$group:{_id: "$Name","Total":{$min:"$amount"}}})
+
+customer> db.customer.aggregate({$group:{_id: "$Name","Total":{$max:"$amount"}}})
+
+customer> db.customer.aggregate({$group:{_id: "$Name","Total":{$first:"$amount"}}})
+
+customer> db.customer.aggregate({$group:{_id: "$Name","Total":{$last:"$amount"}}})
+
+customer> db.customer.aggregate({$group:{_id: "$Name","Total":{$push:"$amount"}}})
+
+customer> db.customer.aggregate({$group:{_id: "$Name","Total":{$sum:1}}})
+
+customer> db.customer.aggregate({$group:{_id: "$Name","Total":{$addToSet:"$amount"}}})
+
+
+
+
+customer> db.customer.createIndex({'item_id':1})
+
+customer> db.customer.createIndex({'item_id':2})
+
+customer> db.customer.createIndex({'item_id':4})
+
+customer> db.customer.createIndex({'item_id':4})
+
+customer> db.customer.createIndex({'item_id':1})
+
+customer> db.customer.getIndexes()
