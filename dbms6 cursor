@@ -1,6 +1,6 @@
 SQL> SET SERVEROUT ON
 SQL> SET VERIFY OFF
-SQL>
+
 SQL> CREATE TABLE o_rollcall(roll_no NUMBER,  name VARCHAR2(15), div VARCHAR2(25));
 
 SQL> CREATE TABLE n_rollcall(roll_no NUMBER,  name VARCHAR2(20), div VARCHAR2(15));
