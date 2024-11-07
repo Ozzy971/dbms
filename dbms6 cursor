@@ -37,7 +37,7 @@ SQL> CREATE PROCEDURE cursor_imp AS
  18  END;
  19  /
 
-SQL>
+
 SQL> BEGIN
   2  cursor_imp;
   3  END;
