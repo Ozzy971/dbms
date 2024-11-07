@@ -11,7 +11,7 @@ mysql> select product_id,prod_Name,supplier_id,category_id,price from product;
 mysql> select orderDetail_Id,orderID,product_id,Quantity from Order_details; 
  
  
-mysql> select product.product_id,product.prod_Name,order_details.orderID from product left join order_details 
+mysql> select product.product_id,product.prod_Name,order_details.orderID from product LEFT JOIN order_details 
 on product.product_id=order_details.product_id; 
 
 mysql> select product.product_id,product.prod_Name,order_details.orderID from product RIGHT JOIN order_details 
