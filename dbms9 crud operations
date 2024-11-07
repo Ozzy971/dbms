@@ -4,7 +4,7 @@ details> db.details.insertMany([{name:"Samiksha",age:20,city:"pune"},{name:"shra
 
 details> db.details.find().pretty()
  
-details> db.details.updateOne({name:"Ram"},{$set:{age:21}});
+details> db.details.updateOne({name:"shravan"},{$set:{age:21}});
 
 details> db.details.updateOne({name:"Samiksha"},{$set:{age:21}});
 
